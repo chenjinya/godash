@@ -5,6 +5,19 @@ import (
 	"log"
 )
 
+
+func ConvertToAny(source interface{}, ptrTo interface{}) error {
+	by, err := json.Marshal(source)
+	if nil != err {
+		return err
+	}
+	err = json.Unmarshal(by, ptrTo)
+	if nil != err {
+		return err
+	}
+	return nil
+}
+
 func JSONStringify(origin interface{}) string {
 	if nil == origin {
 		return ""

@@ -6,6 +6,18 @@ import (
 	"strings"
 )
 
+func StrPtrIsBlank(v *string) bool {
+	if v == nil {
+		return true
+	}
+	return StringIsBlank(*v)
+}
+
+func StringIsBlank(v string) bool {
+	return len(strings.TrimSpace(v)) == 0
+}
+
+
 func Email(s string) bool {
 	if !strings.Contains(s, "@") || s[0] == '@' || s[len(s)-1] == '@' {
 		return false
@@ -23,6 +35,17 @@ func MustString(v interface{}) string {
 		return ""
 	}
 }
+func StrPtr(v string) *string {
+	return &v
+}
+
+func PtrStr(v *string) string {
+	if nil == v {
+		return ""
+	}
+	return *v
+}
+
 func Stoi(v interface{}) int {
 	if nil == v {
 		return 0
