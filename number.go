@@ -4,12 +4,12 @@ import (
 	"strconv"
 )
 
-func Itos(i int) string {
+func ItoS(i int) string {
 	s := strconv.Itoa(i)
 	return s
 }
 
-func I64tos(i int64) string {
+func I64toS(i int64) string {
 	s := strconv.FormatInt(i, 10)
 	return s
 }
@@ -40,18 +40,22 @@ func StrF64(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 64)
 }
 
-func F32Str(s string) (float64, error) {
-	return strconv.ParseFloat(s, 32)
+func F32Str(s string) (ret float64) {
+	ret, _ = strconv.ParseFloat(s, 32)
+	return ret
 }
 
-func F64Str(s string) (float64, error) {
-	return strconv.ParseFloat(s, 64)
+func F64Str(s string) (ret float64) {
+	ret, _ =  strconv.ParseFloat(s, 64)
+	return ret
 }
 
-func I32Str(s string) (int64, error) {
-	return strconv.ParseInt(s, 10, 32)
+func I32Str(s string) (ret int64) {
+	ret, _ =  strconv.ParseInt(s, 10, 32)
+	return ret
 }
 
-func I64Str(s string) (int64, error) {
-	return strconv.ParseInt(s, 10, 64)
+func I64Str(s string) (ret int64) {
+	ret, _ =  strconv.ParseInt(s, 10, 64)
+	return ret
 }
