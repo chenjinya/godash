@@ -16,6 +16,17 @@ func RandSleep() {
 	time.Sleep(time.Duration(seed) * time.Millisecond)
 }
 
+func TimePtr(v time.Time) *time.Time {
+	return &v
+}
+
+func PtrTime(v *time.Time) time.Time {
+	if nil == v {
+		return time.Time{}
+	}
+	return *v
+}
+
 
 type NullTime struct {
 	sql.NullTime
