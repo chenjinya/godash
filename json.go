@@ -2,6 +2,7 @@ package godash
 
 import (
 	"encoding/json"
+	"io"
 	"log"
 )
 
@@ -40,6 +41,13 @@ func JSONIndent(origin interface{}) string {
 		return ""
 	}
 	return string(d)
+}
+
+func JSONDecoder(reader io.Reader, targetPtr interface{})  error {
+	jdecoder := json.NewDecoder(reader)
+	jdecoder.UseNumber()
+	err := jdecoder.Decode(targetPtr)
+	return err
 }
 
 
