@@ -6,6 +6,31 @@ import (
 	"strings"
 )
 
+// 将十进制转为 32 进制
+const safeStrCode32 = "0123456789abcdefghijklmnopqrstuv"
+const safeStrCode37 = "0123456789abcdefghijklmnopqrstuvxyz_-"
+
+func NumberToShortStr(num int64, args ...int64) string {
+	base := int64(32)
+	if len(args) > 0 && args[0] > 0 && args[0] < int64(len(safeStrCode37)) {
+		base = args[0]
+	}
+	var converNums []string
+	for {
+		rem := num % base
+		num = num / base
+		converNums = append(converNums, safeStrCode37[rem:rem+1])
+		if num == 0 {
+			break
+		}
+	}
+	for i, j := 0, len(converNums)-1; i < j; i, j = i+1, j-1 {
+		converNums[i], converNums[j] = converNums[j], converNums[i]
+	}
+	return strings.Join(converNums, "")
+}
+
+
 func StrPtrIsBlank(v *string) bool {
 	if v == nil {
 		return true
