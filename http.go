@@ -167,3 +167,26 @@ func request(method string, uri string, data map[string]string, headers map[stri
 
 	return string(ret), nil
 }
+
+
+func GetHeader(r *http.Request, key string, defaultValue string) string{
+	value := r.Header.Get(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+func GetRealIP(r *http.Request) string {
+	forwardedFor := r.Header.Get("X-Forwarded-For")
+	IP := ""
+	if forwardedFor != "" {
+		IP = strings.Split(forwardedFor, ",")[0]
+	}
+
+	IP = GetHeader(r, "X-Real-IP", IP)
+	if IP == "" {
+		IP = r.RemoteAddr
+	}
+	return IP
+
+}
