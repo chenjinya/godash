@@ -20,7 +20,7 @@ func StructToMap(srcStruct interface{}) (map[string]interface{}, error) {
 	return dst, nil
 }
 
-// 将 nil 的字段刨除
+
 func StructToMapStrict(srcStruct interface{}) (map[string]interface{}, error) {
 	dst := make(map[string]interface{})
 	srcBtyes, err := json.Marshal(srcStruct)
