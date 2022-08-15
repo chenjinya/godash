@@ -59,3 +59,48 @@ func I64Str(s string) (ret int64) {
 	ret, _ =  strconv.ParseInt(s, 10, 64)
 	return ret
 }
+
+func HexToI64(s string) (ret int64) {
+	ret, err := strconv.ParseInt(s, 16, 64)
+	if err != nil {
+		panic(err)
+	}
+	return ret
+}
+
+func DecConvertToX(n int, base int) string {
+	if n < 0 {
+		panic("n < 0")
+	}
+	if base != 2 && base != 8 && base != 16 {
+		panic("only support base : 2, 8, 16")
+	}
+	result := ""
+	h:=map[int]string{
+		0:"0",
+		1:"1",
+		2:"2",
+		3:"3",
+		4:"4",
+		5:"5",
+		6:"6",
+		7:"7",
+		8:"8",
+		9:"9",
+		10:"A",
+		11:"B",
+		12:"C",
+		13:"D",
+		14:"E",
+		15:"F",
+	}
+	for ; n > 0; n /= base {
+		lsb := h[n % base]
+		result = lsb + result
+	}
+	return result
+}
+
+func I64ToHex(i int64) (ret string) {
+	return DecConvertToX(int(i), 16)
+}
