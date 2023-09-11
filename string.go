@@ -1,9 +1,11 @@
 package godash
 
 import (
+	"bytes"
 	"log"
 	"strconv"
 	"strings"
+	"text/template"
 )
 
 // 将十进制转为 32 进制
@@ -30,7 +32,6 @@ func NumberToShortStr(num int64, args ...int64) string {
 	return strings.Join(converNums, "")
 }
 
-
 func StrPtrIsBlank(v *string) bool {
 	if v == nil {
 		return true
@@ -41,7 +42,6 @@ func StrPtrIsBlank(v *string) bool {
 func StringIsBlank(v string) bool {
 	return len(strings.TrimSpace(v)) == 0
 }
-
 
 func Email(s string) bool {
 	if !strings.Contains(s, "@") || s[0] == '@' || s[len(s)-1] == '@' {
@@ -114,4 +114,13 @@ func Stof64(v interface{}) float64 {
 		return float64(0)
 	}
 	return i
+}
+
+// Template  an easy string template function
+func Template(sentence string, params map[string]interface{}) string {
+	outputs := ""
+	buf := bytes.NewBufferString(outputs)
+	templ := template.Must(template.New("string-template").Parse(sentence))
+	_ = templ.Execute(buf, params)
+	return buf.String()
 }
