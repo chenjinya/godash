@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+
+	"github.com/spf13/cast"
 )
 
 // 将十进制转为 32 进制
@@ -116,11 +118,22 @@ func Stof64(v interface{}) float64 {
 	return i
 }
 
+func add(a, b interface{}) int64 {
+	return cast.ToInt64(a) + cast.ToInt64(b)
+}
+
+func multiply(a, b interface{}) int64 {
+	return cast.ToInt64(a) * cast.ToInt64(b)
+}
+
 // Template  an easy string template function
 func Template(sentence string, params map[string]interface{}) string {
 	outputs := ""
 	buf := bytes.NewBufferString(outputs)
-	templ := template.Must(template.New("string-template").Parse(sentence))
+	templ := template.Must(template.New("string-template").Parse(sentence)).Funcs(template.FuncMap{
+		"add":      add,
+		"multiply": multiply,
+	})
 	_ = templ.Execute(buf, params)
 	return buf.String()
 }
