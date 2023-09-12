@@ -130,10 +130,11 @@ func multiply(a, b interface{}) int64 {
 func Template(sentence string, params map[string]interface{}) string {
 	outputs := ""
 	buf := bytes.NewBufferString(outputs)
-	templ := template.Must(template.New("string-template").Parse(sentence)).Funcs(template.FuncMap{
+	tmpl := template.New("string-template").Funcs(template.FuncMap{
 		"add":      add,
 		"multiply": multiply,
 	})
+	templ := template.Must(tmpl.Parse(sentence))
 	_ = templ.Execute(buf, params)
 	return buf.String()
 }
